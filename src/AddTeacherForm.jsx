@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
+import addTeacher from './addTeacher.js'
 
-const AddTeacher = () => {
+const AddTeacherForm = () => {
 
   // デフォルトの色(ランダム)を生成
   function generateRandomColor() {
@@ -27,14 +28,15 @@ const AddTeacher = () => {
     }
   });
 
+  // 登録ボタンを押したときの処理
   const onSubmit = data => {
-    console.log(data);
+    addTeacher(data);
     reset();
     reset({ color: generateRandomColor() });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-2xl">
+    <form onSubmit={handleSubmit(onSubmit)} className = 'card md:w-96 w-full h-fit bg-base-100 shadow-xl relative ${className} rounded border border-red-300 m-8 p-8'>
       <p className='text-2xl text-black font-bold text-center mb-5'>講師登録フォーム</p>
       <div>
         <input
@@ -78,4 +80,4 @@ const AddTeacher = () => {
   )
 }
 
-export default AddTeacher
+export default AddTeacherForm
