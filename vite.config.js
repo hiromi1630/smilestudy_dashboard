@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [
     react(),
     viteSingleFile(),
-    viteStaticCopy({ targets: [{ src: "apps-script/*", dest: "./"}] })
+    viteStaticCopy({ targets: [{ src: "apps-script/*", dest: "./"}] }),
+    viteStaticCopy({ targets: [{ src: "src/server/*", dest: "./"}] })
   ],
 })

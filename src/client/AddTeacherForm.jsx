@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form'
-import addTeacher from './addTeacher.js'
 
 const AddTeacherForm = () => {
 
@@ -22,15 +21,15 @@ const AddTeacherForm = () => {
   } = useForm({
     criteriaMode: "all",     // 発生した全てのエラーを受け取る
     defaultValues: {         // 初回レンダリング時のフォームのデフォルト値
-      familyName: '',
-      firstName: '',
+      family_name: '',
+      given_name: '',
       color: generateRandomColor()
     }
   });
 
   // 登録ボタンを押したときの処理
   const onSubmit = data => {
-    addTeacher(data);
+    google.script.run.withSuccessHandler(function(){alert("登録が完了しました");}).withFailureHandler(function(){alert("登録に失敗しました。もう一度行ってください");}).addTeacher(data);
     reset();
     reset({ color: generateRandomColor() });
   };
@@ -42,30 +41,34 @@ const AddTeacherForm = () => {
         <input
           className="w-full py-2 border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 placeholder-gray-500 placeholder-opacity-50"
           placeholder='苗字'
-          {...register("familyName",{
+          {...register("family_name",{
             required: "苗字を入力してください"
           })}
           type="text"
         />
-        {errors.familyName && <p style={{ color: "red" }}>{errors.familyName.message}</p>}
+        {errors.family_name && <p style={{ color: "red" }}>{errors.family_name.message}</p>}
       </div>
       <div>
         <input 
           className="w-full py-2 border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 placeholder-gray-500 placeholder-opacity-50"
           placeholder='名前'
-          {...register("firstName",{
+          {...register("given_name",{
             required: "名前を入力してください"
           })}
           type="text"
         />
-        {errors.firstName && <p style={{ color: "red" }}>{errors.firstName.message}</p>}
+        {errors.given_name && <p style={{ color: "red" }}>{errors.given_name.message}</p>}
       </div>
       <div>
         <input
           className="w-full py-2 border-b focus:outline-none focus:border-b-2 focus:border-indigo-500 placeholder-gray-500 placeholder-opacity-50"
           placeholder='色'
           {...register("color",{
-            required: "色を入力してください"
+            required: "色を入力してください",
+            pattern: {
+              value: /^#([0-9a-fA-F]{6})$/,
+              message: "カラーコードの形式が不正です"
+            }
           })}
           type="text"
         />
@@ -76,6 +79,7 @@ const AddTeacherForm = () => {
         className="py-3 lg:py-3 px-14 lg:px-14 text-white-500 font-bold rounded-3xl bg-blue-400 hover:shadow-teal-md transition-all outline-none text-white">
         登録
       </button>
+      {isSub}
     </form>
   )
 }
