@@ -79,7 +79,6 @@ const AddTeacherForm = () => {
         className="py-3 lg:py-3 px-14 lg:px-14 text-white-500 font-bold rounded-3xl bg-blue-400 hover:shadow-teal-md transition-all outline-none text-white">
         登録
       </button>
-      {isSub}
     </form>
   )
 }
